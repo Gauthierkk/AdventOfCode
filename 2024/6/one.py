@@ -1,9 +1,9 @@
 with open ('input.txt') as f:
 
     hash = {}
-    visited = []
+    visited = {}
     str = f.read()
-    dirr = 1
+    dirr = '^'
 
     grid = str.split('\n')
     
@@ -17,13 +17,61 @@ with open ('input.txt') as f:
             if grid[x][y] == '^':
                 pos = [x, y]
     
-    while(True):
+    onGrid = True
+    while(onGrid):
 
-        for i in range(pos[0], -1, -1):
-            if grid[pos[0]] 
+        if dirr == '^':
+            for i in range(pos[0], -1, -1):
+                
+                if i in hash and pos[1] in hash[i]:
+                    dirr = '>'
+                    break
 
-            if i in hash and pos[1] in hash[i]:
-                dirr = 2
-                break
-        
-        break
+                if i not in visited: visited[i] = {pos[1]}
+                else: visited[i].add(pos[1])
+
+                pos[0] = i
+            
+        if dirr == '>':
+            for i in range(pos[1], len(grid[0])):
+                if pos[0] in hash and i in hash[pos[0]]:
+                    dirr = 'V'
+                    break
+
+                if pos[0] not in visited: visited[pos[0]] = {i}
+                else: visited[pos[0]].add(i)
+
+                pos[1] = i
+                    
+        if dirr == 'V':
+            for i in range(pos[0], len(grid)):
+                
+                if i in hash and pos[1] in hash[i]:
+                    dirr = '<'
+                    break
+
+                if i not in visited: visited[i] = {pos[1]}
+                else: visited[i].add(pos[1])
+
+                pos[0] = i
+            
+        if dirr == '<':
+            for i in range(pos[1], -1, -1):
+                
+                if pos[0] in hash and i in hash[pos[0]]:
+                    dirr = '^'
+                    break
+                    
+                if pos[0] not in visited: visited[pos[0]] = {i}
+                else: visited[pos[0]].add(i)
+
+                pos[1] = i
+
+        if pos[0] < 1 or pos[0] == len(grid)-1 or pos[1] < 1 or pos[1] == len(grid[0])-1:
+            onGrid = False
+
+    output = 0
+    for k in visited:
+        output += len(visited[k])
+
+    print(output)

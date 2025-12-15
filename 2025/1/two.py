@@ -1,9 +1,23 @@
-from pathlib import Path
+with open('2025/1/input.txt') as f:
+    pos = 50
+    lines = f.readlines()
+    output = 0
 
-# Read input file from the same directory as this script
-input_file = Path(__file__).parent / 'input.txt'
-with open(input_file, 'r') as f:
-    data = f.read().strip()
+    for line in lines:
+        dir = line.strip()[0]
+        steps = int(line.strip()[1:])
 
-# Your solution here
-print(data)
+        for i in range(steps):
+            if dir == 'R':
+                pos += 1
+            elif dir == 'L':
+                pos -= 1
+
+            if pos == 100 or pos == -100:
+                pos = 0
+                
+            if pos == 0:
+                output += 1
+
+        
+    print(output)

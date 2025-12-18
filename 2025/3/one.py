@@ -8,30 +8,18 @@ with open(input_file, 'r') as f:
 
     for line in lines:
         line = line.strip()
+        print(line)
 
-        j = 1
-        a = line[0]
-        b = line[j]
+        tens = 0
+        curr_max = 0
 
-        max_num = 0
-        print(f"Initial max_num: {max_num}")
+        for i in line:            
+            curr_max = max(curr_max, tens*10 + int(i))
+            if int(i) > tens:
+                tens = int(i)
 
-        for i in range(len(line)-1):
-            if i == j:
-                j += 1
-                continue
+        sum += curr_max
 
-            while int(a + b) <= max_num and j < len(line)-1:
-                j += 1
-                b = line[j]
-                if int(a + b) > max_num:
-                    max_num = int(a + b)
-                    print(max_num)
-                    break
-        
-        print(f"Final max num: {max_num}")
-        sum += max_num
-    
     print(f"Final Sum: {sum}")
 
             

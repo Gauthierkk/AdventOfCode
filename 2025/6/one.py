@@ -3,7 +3,6 @@ from pathlib import Path
 # Read input file from the same directory as this script
 input_file = Path(__file__).parent / 'input.txt'
 with open(input_file, 'r') as f:
-    data = f.read().strip()
+    lines = f.readlines()
 
-# Your solution here
-print(data)
+print(lines)
